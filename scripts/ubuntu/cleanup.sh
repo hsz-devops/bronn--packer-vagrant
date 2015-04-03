@@ -24,8 +24,12 @@ sudo rm -fr /var/log/syslog /var/log/upstart/*.log /var/log/{b,w}tmp /var/log/ud
 # Get rid of bash history.
 sudo rm -f $HOME/.bash_history $HOME/.cache $HOME/.lesshst
 
-# Zero out empty sectors with sfill -- this would be much
-# faster with zerofree, but would require a custom-compiled
-# version of Packer, thus we stick with something that's
-# slower, but stock.
-sudo sfill -f -l -l -z /
+## Zero out empty sectors with sfill -- this would be much
+## faster with zerofree, but would require a custom-compiled
+## version of Packer, thus we stick with something that's
+## slower, but stock.
+#sudo sfill -f -l -l -z /
+
+# changing to dd because "plain" installs may not have "secure-delete" installed
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
