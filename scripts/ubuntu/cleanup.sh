@@ -14,12 +14,15 @@ sudo rm -f /var/lib/apt/lists/partial/*
 sudo apt-get -y autoremove
 sudo apt-get -y clean
 
+# we get the lists again so we don't get an error message on "apt-get install" immediatelly after book
+sudo apt-get update 
+
 # Remove logs from initialization.
 sudo rm -f /var/log/*.log /var/log/*.gz /var/log/dmesg*
 sudo rm -fr /var/log/syslog /var/log/upstart/*.log /var/log/{b,w}tmp /var/log/udev
 
 # Get rid of bash history.
-sudo rm -f $HOME/.bash_history
+sudo rm -f $HOME/.bash_history $HOME/.cache $HOME/.lesshst
 
 # Zero out empty sectors with sfill -- this would be much
 # faster with zerofree, but would require a custom-compiled
