@@ -22,7 +22,7 @@ sudo rm -f /var/log/*.log /var/log/*.gz /var/log/dmesg*
 sudo rm -fr /var/log/syslog /var/log/upstart/*.log /var/log/{b,w}tmp /var/log/udev
 
 # Get rid of bash history.
-sudo rm -f $HOME/.bash_history $HOME/.cache $HOME/.lesshst
+sudo rm -rf $HOME/.bash_history $HOME/.cache $HOME/.lesshst
 
 # re-enable vagrant insecure SSH key
 # https://blog.engineyard.com/2014/building-a-vagrant-box
@@ -44,3 +44,8 @@ chown -R vagrant /home/vagrant/.ssh
 # https://blog.engineyard.com/2014/building-a-vagrant-box
 sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
+
+# exit while clearing history file
+# http://www.if-not-true-then-false.com/2010/quit-bash-shell-without-saving-bash-history/
+rm -f $HISTFILE && unset HISTFILE && exit
+
