@@ -24,6 +24,16 @@ sudo rm -fr /var/log/syslog /var/log/upstart/*.log /var/log/{b,w}tmp /var/log/ud
 # Get rid of bash history.
 sudo rm -f $HOME/.bash_history $HOME/.cache $HOME/.lesshst
 
+# re-enable vagrant insecure SSH key
+# https://blog.engineyard.com/2014/building-a-vagrant-box
+mkdir -p /home/vagrant/.ssh
+chmod 0700 /home/vagrant/.ssh
+wget --no-check-certificate \
+    https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub \
+    -O /home/vagrant/.ssh/authorized_keys
+chmod 0600 /home/vagrant/.ssh/authorized_keys
+chown -R vagrant /home/vagrant/.ssh
+
 ## Zero out empty sectors with sfill -- this would be much
 ## faster with zerofree, but would require a custom-compiled
 ## version of Packer, thus we stick with something that's
@@ -31,5 +41,6 @@ sudo rm -f $HOME/.bash_history $HOME/.cache $HOME/.lesshst
 #sudo sfill -f -l -l -z /
 
 # changing to dd because "plain" installs may not have "secure-delete" installed
+# https://blog.engineyard.com/2014/building-a-vagrant-box
 sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
